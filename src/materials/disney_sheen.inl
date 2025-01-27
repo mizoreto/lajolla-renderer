@@ -13,7 +13,26 @@ Spectrum eval_op::operator()(const DisneySheen &bsdf) const {
     }
 
     // Homework 1: implement this!
-    return make_zero_spectrum();
+    Spectrum baseColor = eval(bsdf.base_color, vertex.uv, vertex.uv_screen_size, texture_pool);
+    Real sheen_tint = eval(bsdf.sheen_tint, vertex.uv, vertex.uv_screen_size, texture_pool);
+
+    Vector3 half_vector = normalize(dir_in + dir_out);
+    Real dot_h_out = fabs(dot(half_vector, dir_out));
+    Real dot_n_out = fabs(dot(frame.n, dir_out));
+
+    Real luminance_basecolor = luminance(baseColor);
+    Spectrum c_tint;
+    if (luminance_basecolor > 0) {
+        c_tint = baseColor / luminance_basecolor;
+    } else {
+        c_tint = make_const_spectrum(1);
+    }
+
+    Spectrum c_sheen = (1 - sheen_tint) + sheen_tint * c_tint;
+    Spectrum f_sheen = c_sheen * pow(1-dot_h_out, 5) * dot_n_out;
+
+    return f_sheen;
+    
 }
 
 Real pdf_sample_bsdf_op::operator()(const DisneySheen &bsdf) const {
@@ -29,7 +48,7 @@ Real pdf_sample_bsdf_op::operator()(const DisneySheen &bsdf) const {
     }
 
     // Homework 1: implement this!
-    return 0;
+    return fmax(dot(frame.n, dir_out), Real(0)) / c_PI;
 }
 
 std::optional<BSDFSampleRecord>
@@ -45,7 +64,9 @@ std::optional<BSDFSampleRecord>
     }
 
     // Homework 1: implement this!
-    return {};
+    return BSDFSampleRecord{
+        to_world(frame, sample_cos_hemisphere(rnd_param_uv)),
+        Real(0) /* eta */, 1 /* roughness */};
 }
 
 TextureSpectrum get_texture_op::operator()(const DisneySheen &bsdf) const {

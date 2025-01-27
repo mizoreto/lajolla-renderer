@@ -15,9 +15,14 @@
 
 		<bsdf type="disneymetal">
 			<rgb name="baseColor" value="0.82 0.67 0.16"/>
-			<float name="roughness" value="0.2"/>
+			<float name="roughness" value="0.25"/>
 			<float name="anisotropic" value="0.8"/>
 		</bsdf>
+
+		<!-- <bsdf type="roughplastic">
+			<rgb name="diffuseReflectance" value="0.82 0.67 0.16"/>
+			<float name="roughness" value="0.2"/>
+		</bsdf> -->
 	</shape>
 
 	<sensor type="perspective" id="Camera-camera">

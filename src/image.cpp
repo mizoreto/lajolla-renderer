@@ -3,6 +3,7 @@
 #include "3rdparty/stb_image.h"
 #define TINYEXR_USE_MINIZ 1
 #define TINYEXR_IMPLEMENTATION
+#define _WINDOWS
 #include "3rdparty/tinyexr.h"
 #include "flexception.h"
 #include <algorithm>

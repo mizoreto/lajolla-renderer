@@ -13,7 +13,7 @@
 			<translate z="0.01"/>
 		</transform>
 
-<!-- 		<bsdf type="diffuse">
+		<!-- <bsdf type="diffuse">
 			<rgb name="reflectance" value="0.82 0.67 0.16"/>
 		</bsdf> -->
 
