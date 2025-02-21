@@ -18,7 +18,7 @@
 			<integer name="height" value="720" />
 			<string name="file_format" value="openexr" />
 			<string name="pixel_format" value="rgb" />
-			<rfilter type="tent" />
+			<rfilter type="gaussian" />
 		</film>
 	</sensor>
 	<bsdf type="disneybsdf" id="MaterialBSDF">
